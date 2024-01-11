@@ -1,34 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useMemo, useState } from 'react'
+import Card from './components/base/card';
+import { Link } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+const baseUrl = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/';
+const App = () => {
+  const [data, setData] = useState([])
+
+  const getData = async () => {
+    const res = await fetch(`${baseUrl}v1/champion-summary.json`);
+    const resJson = await res.json()
+    const newData = resJson.filter((item: any) => item.id !== -1)
+    setData(newData);
+  }
+
+  const refinedData: any = useMemo(()=> {
+    if (!data) return[];
+    return data.map((item: any) => {
+      const newSplashPath = item.squarePortraitPath.split('/').slice(3).join('/') 
+      return {
+        ...item,
+        squarePortraitPath: `${baseUrl}${newSplashPath}`,
+      }
+    })
+  }, [data])
+  console.log(refinedData)
+
+  useEffect(()=> {
+    getData()
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='grid grid-cols-4 p-4'>
+     {refinedData.map((item: any) => (
+      <Card 
+      key={item.id}
+      label={item.name}
+      src={item.squarePortraitPath}
+      containerClassName="col-span-1 shadow rounded-lg min-h-40 justify-between p-5 cursor-pointer hover:shadow-lg"
+      to={`/guide/${item.id}`}
+
+    />
+     ))}
+    </div>
   )
 }
 

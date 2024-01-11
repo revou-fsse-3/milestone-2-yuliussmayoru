@@ -1,15 +1,30 @@
-import { ButtonHTMLAttributes } from "react"
+import { ImgHTMLAttributes } from 'react'
+import { Link } from 'react-router-dom'
 
-type ButtonProps = {
-    label:string
+type CardElementProps = {
+    label: string
+    containerClassName?: string
+    descriptionClassName?: string
+    to: string
 }
 
-type Props = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
+type CardProps = ImgHTMLAttributes<HTMLImageElement> & CardElementProps
 
-const Button = ({label, children, ...rest}: Props) => {
+const Card = (props: CardProps) => {
+    const {
+        label,
+        containerClassName,
+        descriptionClassName,
+        to,
+        ...rest
+    } = props
+
     return (
-        <button {...rest} className="button">{children}</button>
+        <Link to={to} className={containerClassName}>
+            <img {...rest} />
+            <p className={descriptionClassName}>{label}</p>
+        </Link>
     )
 }
 
-export default Button
+export default Card

@@ -1,27 +1,15 @@
-import { HTMLAttributes } from "react"
+import { ButtonHTMLAttributes } from "react"
 
-type CardElementProps = {
-    label : string
-    containerClassName: string
-    descriptionClassName: string
+type ButtonProps = {
+    label:string
 }
 
-type CardProps = HTMLImageElement & CardElementProps
+type Props = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-const CardContent = (props) => {
-
-    const {
-        label,
-        containerClassName,
-        descriptionClassName,
-        rest
-    } = props
+const Button = ({label, children, ...rest}: Props) => {
     return (
-        <div class>
-            <img {...rest}/>
-            <p>{}</p>
-        </div>
+        <button {...rest} className="button">{children}</button>
     )
 }
 
-export default CardContent
+export default Button
