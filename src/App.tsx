@@ -1,37 +1,87 @@
-import { useEffect, useMemo, useState } from 'react'
+import { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import Card from './components/base/card';
-import { Link } from 'react-router-dom';
+import Input from './components/base/Input';
 
 const baseUrl = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/';
 const App = () => {
   const [data, setData] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+
+  
+  const [dataFilter, setDataFilter] = useState([])
+  
+  const handleSearchTerm = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm (e.target.value)
+    if(searchTerm.length >  2){
+      setDataFilter(() => {
+        let nameSearch = data.filter(champion => champion.name.includes(searchTerm))
+        console.log(nameSearch)
+        return nameSearch
+      })
+       return 
+    }
+    setDataFilter(data)
+    // console.log(searchTerm)
+  
+  }
+  //useEffect(())
+
 
   const getData = async () => {
     const res = await fetch(`${baseUrl}v1/champion-summary.json`);
     const resJson = await res.json()
     const newData = resJson.filter((item: any) => item.id !== -1)
-    setData(newData);
-  }
-
-  const refinedData: any = useMemo(()=> {
-    if (!data) return[];
-    return data.map((item: any) => {
+    let refineData= newData.map((item: any) => {
       const newSplashPath = item.squarePortraitPath.split('/').slice(3).join('/') 
       return {
         ...item,
         squarePortraitPath: `${baseUrl}${newSplashPath}`,
       }
     })
-  }, [data])
-  console.log(refinedData)
 
-  useEffect(()=> {
+    setData(refineData);
+    setDataFilter(refineData)
+  }
+
+  // const refinedData: any = useMemo(()=> {
+  //   if (!data) return[];
+
+  //   return      data.map((item: any) => {
+  //     const newSplashPath = item.squarePortraitPath.split('/').slice(3).join('/') 
+  //     return {
+  //       ...item,
+  //       squarePortraitPath: `${baseUrl}${newSplashPath}`,
+  //     }
+  //   })
+
+  // }, [data])
+  // console.log(refinedData)
+
+
+  useEffect(()=>{
     getData()
-  }, []);
-
+  }, [])
+  
   return (
-    <div className='grid grid-cols-4 p-4'>
-     {refinedData.map((item: any) => (
+    <div className=''>
+
+<div
+ className='w-[24rem] mx-auto my-6 '
+>
+      <Input
+        label='Search Champion :'
+        placeholder='Search Champion'
+        error={false}
+        value={searchTerm}
+        onChange={handleSearchTerm}
+       
+      />
+
+</div>
+
+<div className='flex flex-wrap gap-2'>
+
+     {dataFilter.map((item: any) => (
       <Card 
       key={item.id}
       label={item.name}
@@ -41,6 +91,7 @@ const App = () => {
 
     />
      ))}
+</div>
     </div>
   )
 }

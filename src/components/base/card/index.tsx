@@ -20,6 +20,7 @@ const Card = (props: CardProps) => {
     } = props
 
     return (
+
         <Link to={to} className={containerClassName}>
             <img {...rest} />
             <p className={descriptionClassName}>{label}</p>

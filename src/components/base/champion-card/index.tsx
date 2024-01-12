@@ -14,7 +14,7 @@ const ChampionCard = (props: CardProps) => {
         ...rest
     } = props
     return (
-        <div className="champion-card-wrapper">
+        <div className="champion-card-wrapper flex">
             <h3>{name} Build Guide</h3>
             <p>{shortBio}</p>
             <img {...rest} className="champion-icon"/>
