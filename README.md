@@ -1,3 +1,6 @@
+# Link to the Project
+-[Milestone 2 assignment] (https://prismatic-marigold-5646b4.netlify.app)
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
