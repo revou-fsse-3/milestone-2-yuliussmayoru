@@ -1,7 +1,5 @@
-
-
 import {  FC, HTMLAttributes ,PropsWithChildren} from 'react';
-import {Outlet} from "react-router-dom
+import {Outlet} from "react-router-dom"
 interface LayoutProps  extends HTMLAttributes<HTMLDivElement>{ 
 
 }
@@ -13,9 +11,12 @@ const Layout: LayoutComponents = ({children,...resProps }) => {
                 `${resProps.className ? resProps.className : ""}`
               }
             >
+                <h1 className=''>
+
                 LEAUGE OF LEGENDS CHAMPION
+                </h1>
            <Outlet/>
         </div>;
 };
 
-export default index;
+export default Layout;

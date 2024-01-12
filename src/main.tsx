@@ -5,7 +5,6 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Guide from './components/pages/guide/index.tsx'
 import {Outlet} from "react-router-dom"
-import Input from './components/base/Input/index.tsx'
 
 interface LayoutProps  extends HTMLAttributes<HTMLDivElement>{ 
 }

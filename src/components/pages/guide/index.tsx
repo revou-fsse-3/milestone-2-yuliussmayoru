@@ -2,10 +2,14 @@ import { useParams } from "react-router-dom";
 import ChampionCard from "../../base/champion-card";
 import { useEffect, useMemo, useState } from "react";
 
+type Data = {
+    squarePortraitPath?: string
+}
+
 
 const baseUrl = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/'
 const Guide = () => {
-    const [data, setData] = useState({})
+    const [data, setData] = useState<Data>({})
     const {id}=useParams()
 
     const getData = async () => {

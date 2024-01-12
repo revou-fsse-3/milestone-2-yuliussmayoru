@@ -1,4 +1,5 @@
 import { ImgHTMLAttributes } from "react";
+import { Link } from "react-router-dom";
 
 type ChampCardElementProps ={
     name: string;
@@ -18,6 +19,7 @@ const ChampionCard = (props: CardProps) => {
             <h3>{name} Build Guide</h3>
             <p>{shortBio}</p>
             <img {...rest} className="champion-icon"/>
+            <Link to = '/'>BACK</Link>
         </div>
     )
 }

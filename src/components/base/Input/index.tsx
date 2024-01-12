@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from 'react';
 
 type InputProps = {
     label: string
-    error: boolean
+    error?: boolean
 }
 type Props = InputProps & InputHTMLAttributes<HTMLInputElement>
 

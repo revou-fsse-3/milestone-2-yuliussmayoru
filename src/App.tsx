@@ -1,14 +1,19 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Card from './components/base/card';
 import Input from './components/base/Input';
+import Form from './components/base/form';
 
+type Data = {
+  name: string;
+  champion: string;
+}
 const baseUrl = 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/';
 const App = () => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState<Data[]>([])
   const [searchTerm, setSearchTerm] = useState('')
 
   
-  const [dataFilter, setDataFilter] = useState([])
+  const [dataFilter, setDataFilter] = useState<Data[]>([])
   
   const handleSearchTerm = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm (e.target.value)
@@ -67,7 +72,7 @@ const App = () => {
 
 <div
  className='w-[24rem] mx-auto my-6 '
->
+> 
       <Input
         label='Search Champion :'
         placeholder='Search Champion'
@@ -76,6 +81,8 @@ const App = () => {
         onChange={handleSearchTerm}
        
       />
+
+      <Form />
 
 </div>
 
